@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 
 import common.Config;
 
-// Window for one observation station. Buttons type the station menu numbers 1-5.
+// Window for one observation station. Buttons type the station menu options 1-5.
 public class StationWindow extends JFrame {
 
     private final ProcessConsole console = new ProcessConsole();
@@ -114,7 +114,7 @@ public class StationWindow extends JFrame {
         if (started) {
             setState(true, false);
             status.setText("Looking for the server...");
-            console.send(String.valueOf(number), false);   // answer "Choose your station (1-5)"
+            console.send(String.valueOf(number), false);   // answer "Choose your station (1-2)"
         }
     }
 

@@ -7,7 +7,7 @@ public class Config {
     public static final int UDP_PORT = 5001;   // discovery + heartbeats
     public static final int FILE_PORT = 5002;  // sky images
 
-    public static final int MAX_STATIONS = 5;
+    public static final int MAX_STATIONS = 2;
     public static final int UDP_BUFFER_SIZE = 256;
     public static final int FILE_BUFFER_SIZE = 4096;
 
@@ -25,6 +25,6 @@ public class Config {
 
     public static final String IMAGE_FOLDER = "received_images";
 
-    public static final String[] STATION_IDS = {"ASTRO-01", "ASTRO-02", "ASTRO-03", "ASTRO-04", "ASTRO-05"};
-    public static final String[] LOCATIONS = {"Sri Lanka", "India", "Australia", "Japan", "South Africa"};
+    public static final String[] STATION_IDS = {"ASTRO-01", "ASTRO-02"};
+    public static final String[] LOCATIONS = {"Sri Lanka", "India"};
 }

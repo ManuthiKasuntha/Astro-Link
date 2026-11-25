@@ -27,7 +27,7 @@ Three network ports (all in `common/Config.java`):
 ### The life of one alert
 
 ```
- ASTRO-01 (station)               SERVER                         ASTRO-02, ASTRO-03
+ ASTRO-01 (station)               SERVER                         ASTRO-02 (station)
  ------------------               ------                         ------------------
  UDP broadcast DISCOVER  ──────►  UDP-Service replies SERVER_HERE
  TCP connect :5000       ──────►  main thread accept() → new Handler-1 thread
@@ -38,12 +38,11 @@ Three network ports (all in `common/Config.java`):
  ALERT|ASTRO-01|ra|dec|b|base ─►  Handler-1: events.createEvent() → EVT-0001
                          ◄──────  ALERT_OK|EVT-0001
  image bytes on :5002    ──────►  File-Receiver saves received_images/EVT-0001_ASTRO-01.png
-                                  Handler-1 ── FOLLOW_UP|EVT-0001|ra|dec ──────►  (both stations)
+                                  Handler-1 ── FOLLOW_UP|EVT-0001|ra|dec ──────►  (the other station)
                                   Handler-1 starts Timer-EVT-0001 (15 s)
                                                                  Server-Listener thread "observes"
                                   Handler-2 ◄── VERIFY|EVT-0001|ASTRO-02|CONFIRMED|...
-                                  Handler-3 ◄── VERIFY|EVT-0001|ASTRO-03|NOT_DETECTED|...
-                                  last answer → events.addAnswer() returns RESULT line
+                                  the answer → events.addAnswer() returns RESULT line
  RESULT|EVT-0001|LIKELY_CONFIRMED|... ◄── broadcast to every station ──►
 ```
 
@@ -171,7 +170,7 @@ of them wins and the RESULT is broadcast **exactly once**.
 | L6 | `TCP_PORT = 5000` – port for text messages. `public static final` = global constant. |
 | L7 | `UDP_PORT = 5001` – port for discovery and heartbeats. |
 | L8 | `FILE_PORT = 5002` – port for image files. |
-| L10 | `MAX_STATIONS = 5` – the server rejects a 6th station. |
+| L10 | `MAX_STATIONS = 2` – the server rejects a 3rd station. |
 | L11 | `UDP_BUFFER_SIZE = 256` – byte array size for one UDP datagram (our messages are short). |
 | L12 | `FILE_BUFFER_SIZE = 4096` – image is copied in 4 KB chunks. |
 | L14 | `VERIFY_TIMEOUT_MS = 15000` – how long the Timer thread waits for VERIFY answers. |
@@ -185,7 +184,7 @@ of them wins and the RESULT is broadcast **exactly once**.
 | L23 | `FLARE_PERCENT = 15` – 15 % chance that a simulated reading is a flare. |
 | L24 | `HEARTBEAT_DROP_PERCENT = 10` – the station deliberately skips 10 % of heartbeats to show that UDP can lose packets ("UDP GAP" on the server). |
 | L26 | `IMAGE_FOLDER` – where the server saves images. |
-| L28–29 | The five station IDs and their locations; index 0 = ASTRO-01 / Sri Lanka, etc. |
+| L28–29 | The two station IDs and their locations; index 0 = ASTRO-01 / Sri Lanka, index 1 = ASTRO-02 / India. |
 
 ### 3.2 `Log.java` – thread-safe printing
 | Lines | Explanation |
@@ -273,7 +272,7 @@ are only touched inside `synchronized` methods of `StationRegistry`.
 | L16 | `register` – called by a Handler thread. Returns `null` if OK, or an error text. |
 | L17 | Look up an existing entry with that ID. |
 | L18–20 | If it exists **and** is still TCP-connected → reject (duplicate ID). Because the method is synchronized, two stations registering "ASTRO-02" at the same moment can't both pass this check. |
-| L21–23 | If 5 stations are already connected → reject. |
+| L21–23 | If 2 stations (`MAX_STATIONS`) are already connected → reject. |
 | L24 | Add (or replace an old disconnected entry). |
 | L25 | `null` = success. |
 | L28 | `disconnect` – called from a Handler's `finally` when its connection ends. |
@@ -361,7 +360,7 @@ are only touched inside `synchronized` methods of `StationRegistry`.
 | L17 | Number of CONFIRMED answers. |
 | L18 | `closed` – true once a result is decided (protects against a double result). |
 | L19 | `result` – starts as `"WAITING"`. |
-| L20 | `summary` – text like "2 of 3 stations confirmed". |
+| L20 | `summary` – text like "1 of 1 stations confirmed". |
 | L22–31 | Constructor stores the values. |
 
 ### 4.6 `EventManager.java` – creates events and decides results (thread-safe)
@@ -526,11 +525,11 @@ are only touched inside `synchronized` methods of `StationRegistry`.
 | L43–45 | If the TCP connection + registration works, show the menu. |
 | L46 | Close the scanner. |
 | L49 | `chooseStation`. |
-| L50–52 | Print the five choices. |
+| L50–52 | Print the two choices. |
 | L53 | Ask until valid. |
 | L55–57 | Input closed (e.g. Ctrl+D) → exit. |
 | L58 | Read a line. |
-| L59–63 | Convert to number; 1–5 → return index (0–4). |
+| L59–63 | Convert to number; 1–2 → return index (0–1). |
 | L64–66 | Not a number → ask again. |
 | L67 | Error message. |
 | L72 | `connect` – TCP connect and REGISTER. |
@@ -728,8 +727,8 @@ are only touched inside `synchronized` methods of `StationRegistry`.
    → goes back to `readLine()`.
 3. **Station 1 `Server-Listener`** gets ALERT_OK → `ImageSender.sendImage` → **Server `File-Receiver`**
    `accept()` wakes and saves the file.
-4. **Stations 2 and 3 `Server-Listener`** get FOLLOW_UP → sleep 1–3 s → send VERIFY.
-5. **Server `Handler-2` / `Handler-3`** each read their VERIFY → `addAnswer` (event lock). The last one gets the
+4. **Station 2 `Server-Listener`** gets FOLLOW_UP → sleep 1–3 s → send VERIFY.
+5. **Server `Handler-2`** reads the VERIFY → `addAnswer` (event lock). With all answers in, it gets the
    RESULT line → `broadcast` (registry lock).
 6. **`Timer-EVT-0001`** wakes after 15 s → `closeEvent` returns `null` (already closed) → does nothing → TERMINATED.
 7. All **`Server-Listener`** threads print the FINAL RESULT box.

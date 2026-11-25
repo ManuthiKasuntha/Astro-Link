@@ -51,7 +51,7 @@ public class StationMain {
             System.out.println("  " + (i + 1) + ". " + Config.STATION_IDS[i] + " (" + Config.LOCATIONS[i] + ")");
         }
         while (true) {
-            System.out.print("Choose your station (1-5): ");
+            System.out.print("Choose your station (1-" + Config.STATION_IDS.length + "): ");
             if (!scanner.hasNextLine()) {
                 System.exit(0);
             }
@@ -64,7 +64,7 @@ public class StationMain {
             } catch (NumberFormatException e) {
                 // ask again
             }
-            System.out.println("Please type a number from 1 to 5.");
+            System.out.println("Please type a number from 1 to " + Config.STATION_IDS.length + ".");
         }
     }
 

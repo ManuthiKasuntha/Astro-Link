@@ -20,7 +20,7 @@ Uses only Swing (part of every JDK), so it runs on Windows, Mac and Linux with *
 
 * **Server window**: *Start server* / *Stop server*. Buttons for `list`, `events`, `threads`, `help`,
   plus a box for any command. It shows all IP addresses of this computer.
-* **Station window**: pick a station (1–5), optionally type the server IP, press *Connect*.
+* **Station window**: pick a station (1 or 2), optionally type the server IP, press *Connect*.
   Buttons for the menu: start/stop simulation, send test alert, info, connection + threads.
   *Disconnect* sends BYE. *Force close (crash)* kills the station, so the server shows `DISCONNECTED`
   and 15 s later `OFFLINE`.

@@ -31,8 +31,8 @@ Words in *(italics)* are actions, not things to say.
 >
 > The first part is the **server**. Think of it as the **control centre**. It runs on one laptop.
 >
-> The second part is the **stations**. Each station is like **one observatory**. We have up to five:
-> Sri Lanka, India, Australia, Japan and South Africa. Each one runs on a different laptop.
+> The second part is the **stations**. Each station is like **one observatory**. We have two:
+> Sri Lanka and India. Each one runs on a different laptop.
 >
 > All the laptops talk to each other over a normal Wi-Fi network."
 
@@ -43,9 +43,9 @@ Words in *(italics)* are actions, not things to say.
 > **One:** a station sees something bright and sends an **alert** to the control centre,
 > together with a small picture of the sky.
 >
-> **Two:** the control centre tells all the **other** stations: 'Please look at this spot.'
+> **Two:** the control centre tells the **other** station: 'Please look at this spot.'
 >
-> **Three:** each station answers: **seen it**, **not seen**, or **not available**.
+> **Three:** that station answers: **seen it**, **not seen**, or **not available**.
 >
 > **Four:** the control centre counts the answers. If half or more say 'seen it', the result is
 > **likely confirmed**. If not, or if nobody answers in 15 seconds, the result is **not sure**.
@@ -63,9 +63,9 @@ Words in *(italics)* are actions, not things to say.
 
 > "It is now waiting for stations to join. It also shows its address on the network."
 
-*(Start **Station** three times. Type 1, 2 and 3.)*
+*(Start **Station** two times. Type 1 and 2.)*
 
-> "Now I start three stations: Sri Lanka, India and Australia. They **find the control centre
+> "Now I start two stations: Sri Lanka and India. They **find the control centre
 > by themselves**. We don't need to type any address. You can see the server says each one has
 > joined."
 
@@ -78,7 +78,7 @@ Words in *(italics)* are actions, not things to say.
 > "Now Sri Lanka has seen something bright, so it sends an alert.
 >
 > Look at the server: it received the **alert**, gave it a number, EVT-0001, and asked the other
-> stations to check. India and Australia looked and sent back their answers.
+> station to check. India looked and sent back its answer.
 >
 > And here is the **final result** box. It appears on **every** station at the same time,
 > so every observatory knows the decision."
@@ -103,19 +103,19 @@ Words in *(italics)* are actions, not things to say.
 
 > "In real life, computers crash and internet connections drop. Our system handles this."
 
-*(Close the ASTRO-03 terminal with the trash-can icon.)*
+*(Close the ASTRO-02 terminal with the trash-can icon, or press **Force close (crash)** in the GUI.)*
 
-> "I just closed Australia suddenly, like a crash. The server notices **immediately** and shows
+> "I just closed India suddenly, like a crash. The server notices **immediately** and shows
 > 'disconnected'.
 >
-> Every station also sends a small **'I am alive'** message every 5 seconds. Australia stopped
+> Every station also sends a small **'I am alive'** message every 5 seconds. India stopped
 > sending it, so after about 15 seconds the server marks it **offline**."
 
 ### When someone uses the same name twice
 
-*(Start another **Station** and type **2**.)*
+*(Start another **Station** and type **1**.)*
 
-> "Now I try to join again as India, but India is already connected. The server **refuses** it.
+> "Now I try to join as Sri Lanka, but Sri Lanka is already connected. The server **refuses** it.
 > So two observatories can never pretend to be the same one."
 
 ### Many things at the same time
