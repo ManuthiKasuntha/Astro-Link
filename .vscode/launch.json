@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Server",
+            "request": "launch",
+            "mainClass": "server.ServerMain",
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "java",
+            "name": "Station",
+            "request": "launch",
+            "mainClass": "station.StationMain",
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "java",
+            "name": "GUI (optional)",
+            "request": "launch",
+            "mainClass": "gui.AstroLinkGui",
+            "console": "internalConsole"
+        }
+    ]
+}

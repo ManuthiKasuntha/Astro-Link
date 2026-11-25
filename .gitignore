@@ -1,0 +1,9 @@
+# build output
+bin/
+out/
+*.class
+# created while running
+received_images/
+sky_*.png
+# GUI build output
+gui/build/

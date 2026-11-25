@@ -1,0 +1,5 @@
+{
+    "java.project.sourcePaths": ["src", "gui/src"],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": []
+}
